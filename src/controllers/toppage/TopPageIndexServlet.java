@@ -65,7 +65,9 @@ public class TopPageIndexServlet extends HttpServlet {
             request.getSession().removeAttribute("flush");
         }
 
+        // ビューとなるJSPを指定する
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/topPage/index.jsp");
+        // forward()メソッドでレスポンス画面としてJSPファイルを呼び出します
         rd.forward(request, response);
     }
 

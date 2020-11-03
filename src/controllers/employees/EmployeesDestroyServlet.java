@@ -32,12 +32,17 @@ public class EmployeesDestroyServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // フォームから入手した"_token"をString型にキャストしたのをString型の変数_tokenに入れる
         String _token = (String)request.getParameter("_token");
+        /*
+        _tokenがnullでない時かつ_tokenとセッションidが等しい時に実行 */
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
             Employee e = em.find(Employee.class, (Integer)(request.getSession().getAttribute("employee_id")));
+            // Delete_flagに１を入れる
             e.setDelete_flag(1);
+            // 最新更新情報を更新する
             e.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
             em.getTransaction().begin();

@@ -4,6 +4,7 @@
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
         <c:choose>
+            <%-- employeeがnullでない時に従業員情報を表示 --%>
             <c:when test="${employee != null}">
                 <h2>id : ${employee.id} の従業員情報 詳細ページ</h2>
 
@@ -21,6 +22,7 @@
                             <th>権限</th>
                             <td>
                                 <c:choose>
+                                    <%-- admin_flagが1の時（管理者の時）管理者と表示 --%>
                                     <c:when test="${employee.admin_flag == 1}">管理者</c:when>
                                     <c:otherwise>一般</c:otherwise>
                                 </c:choose>
@@ -43,6 +45,7 @@
 
                 <p><a href="<c:url value='/employees/edit?id=${employee.id}' />">この従業員情報を編集する</a></p>
             </c:when>
+            <%-- id(社員id)が見つからなかった時 --%>
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>
             </c:otherwise>

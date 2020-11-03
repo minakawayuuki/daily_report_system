@@ -35,12 +35,30 @@
                                 <fmt:formatDate value="${report.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </td>
                         </tr>
+                        <tr>
+                            <th>いいね数</th>
+                            <c:choose>
+                                <%-- いいね数が0より大きい時はいいね数をURLにする --%>
+                                <c:when test="${report.reaction_nice_cnt > 0}">
+                                    <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${report.id}' />">${report.reaction_nice_cnt}</a></td>
+                                </c:when>
+                                <%-- いいね数が0より大きくない時はURLにしない --%>
+                                <c:otherwise>
+                                    <td class="report_reaction_nice_cnt">${report.reaction_nice_cnt}</td>
+                                </c:otherwise>
+                            </c:choose>
+                        </tr>
                     </tbody>
                 </table>
 
-                <c:if test="${sessionScope.login_employee.id == report.employee.id}">
-                    <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
-                </c:if>
+                <c:choose>
+                    <c:when test="${sessionScope.login_employee.id == report.employee.id}">
+                        <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
+                    </c:when>
+                    <c:otherwise>
+                       <p><a href="<c:url value="/reports/count/likes?id=${report.id}" />">いいねする</a></p>
+                    </c:otherwise>
+                </c:choose>
             </c:when>
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>

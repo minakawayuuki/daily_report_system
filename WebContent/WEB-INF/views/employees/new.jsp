@@ -4,7 +4,9 @@
     <c:param name="content">
         <h2>従業員 新規登録ページ</h2>
 
+        <%-- methodでサーバーにデータを送る形式を指定actionで実行された時の動作を指定 --%>
         <form method="POST" action="<c:url value='/employees/create' />">
+            <%-- _form.jspをこの位置で読み取る --%>
             <c:import url="_form.jsp" />
         </form>
 

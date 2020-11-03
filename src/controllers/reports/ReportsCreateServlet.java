@@ -58,6 +58,8 @@ public class ReportsCreateServlet extends HttpServlet {
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);
             r.setUpdated_at(currentTime);
+            // 追加した箇所です
+            r.setReaction_nice_cnt(0);
 
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) {
@@ -70,6 +72,9 @@ public class ReportsCreateServlet extends HttpServlet {
                 rd.forward(request, response);
             } else {
                 em.getTransaction().begin();
+                /*
+                em.persist(r)はEntityManagerの管理対象外となっている
+                エンティティオブジェクトをEntityManagerの管理対象とします。 */
                 em.persist(r);
                 em.getTransaction().commit();
                 em.close();

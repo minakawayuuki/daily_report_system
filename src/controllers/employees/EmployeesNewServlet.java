@@ -30,10 +30,14 @@ public class EmployeesNewServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // セッションidをjspで使えるように変数_tokenに入れる
         request.setAttribute("_token", request.getSession().getId());
+        // インスタンス化したEmployeeクラス(Employee.java)をjspで使えるように変数employeeに入れる
         request.setAttribute("employee", new Employee());
 
+        // ビューとなるjspをRequestDispatcher型の変数rdに入れる
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/new.jsp");
+        // レスポンス画面としてjspファイルを呼び出す
         rd.forward(request, response);
     }
 

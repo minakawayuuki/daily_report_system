@@ -32,17 +32,27 @@ public class EmployeesEditServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*
+        DBUtilのcreateEntityManager()を実行してEntityManagerを作成し
+        EntityManager型の変数emに入れる*/
         EntityManager em = DBUtil.createEntityManager();
 
+        /*
+        request.getParameterで入手したidをint型にキャストしEmployee.class(Employee.java)に
+        一致するものがないかを探して一致したものをEmployee型の変数eに入れる*/
         Employee e = em.find(Employee.class, Integer.parseInt(request.getParameter("id")));
 
+        // emを閉じる
         em.close();
 
+        // eをjspで使えるようにemployeeに入れる
         request.setAttribute("employee", e);
         request.setAttribute("_token", request.getSession().getId());
         request.getSession().setAttribute("employee_id", e.getId());
 
+        // ビューにするjspを指定する
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/edit.jsp");
+        // レスポンス画面としてjspファイルを呼び出します
         rd.forward(request, response);
     }
 

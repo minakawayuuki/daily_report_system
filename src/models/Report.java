@@ -19,18 +19,22 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(
             name = "getAllReports",
+            // 全ての日報情報を取得
             query = "SELECT r FROM Report AS r ORDER BY r.id DESC"
             ),
     @NamedQuery(
             name = "getReportsCount",
+            // 日報の前件数を取得
             query = "SELECT COUNT(r) FROM Report AS r"
             ),
     @NamedQuery(
             name = "getMyAllReports",
+            // 自分の日報を先に登録した順番に並べ替える
             query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
             ),
     @NamedQuery(
             name = "getMyReportsCount",
+            // 指定された日報がすでにデータベースに存在しているかを調べる
             query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
             ),
 })
@@ -41,16 +45,20 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // @ManyToOneで多対一関連を定義
     @ManyToOne
+    // @JoinColumnで統合に用いるカラムを指定
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
+    // date型は年月日のみ
     @Column(name = "report_date", nullable = false)
     private Date report_date;
 
     @Column(name = "title", length = 255, nullable = false)
     private String title;
 
+    // @Lobとすることで改行もデータベースに保存される
     @Lob
     @Column(name = "content", nullable = false)
     private String content;
@@ -60,6 +68,9 @@ public class Report {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
+
+    @Column(name = "reaction_nice_cnt", nullable = false)
+    private Integer reaction_nice_cnt;
 
     public Integer getId() {
         return id;
@@ -116,4 +127,13 @@ public class Report {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
+
+    public Integer getReaction_nice_cnt() {
+        return reaction_nice_cnt;
+    }
+
+    public void setReaction_nice_cnt(Integer reactio_nice_cnt) {
+        this.reaction_nice_cnt = reactio_nice_cnt;
+    }
+
 }

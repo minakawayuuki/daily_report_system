@@ -36,17 +36,28 @@ public class EmployeesUpdateServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // フォームから入手したものを"_teken"に入れString型にキャストしたものをString型の変数_tokenに入れる
         String _token = (String)request.getParameter("_token");
+        // _tokenがnullでない時かつ_tokenのセッションidがリクエストスコープのセッションidと同じ時
         if(_token != null && _token.equals(request.getSession().getId())) {
+            /*
+            DBUtilのcreateEntityManager()メソッドを実行しEntityManagerを作成し
+            EntityManager型の変数emに入れる */
             EntityManager em = DBUtil.createEntityManager();
 
+            /*
+            セッションスコープからInteger型にキャストしたemployee_id（社員id）を取り出し
+            Employeeクラスから探してEmployee型の変数eに入れる */
             Employee e = em.find(Employee.class, (Integer)(request.getSession().getAttribute("employee_id")));
 
             // 現在の値と異なる社員番号が入力されていたら
             // 重複チェックを行う指定をする
+            // Boolean型の変数code_duplicate_checkにtrueを入れる
             Boolean code_duplicate_check = true;
+            // e(社員)のCodeとフォームから入手した"code"が等しい時実行
             if(e.getCode().equals(request.getParameter("code"))) {
                 code_duplicate_check = false;
+            // 等しくない時実行
             } else {
                e.setCode(request.getParameter("code"));
             }

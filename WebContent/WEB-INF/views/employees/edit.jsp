@@ -3,13 +3,14 @@
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
         <c:choose>
+            <%-- employeeがnullでない時に従業員情報を編集するページを開く --%>
             <c:when test="${employee != null}">
                 <h2>id : ${employee.id}の従業員情報 編集ページ</h2>
                 <p>(パスワードは変更する場合のみ入力してください)</p>
                 <form method="POST" action="<c:url value='/employees/update' />">
                     <c:import url="_form.jsp" />
                 </form>
-
+           <!-- onlick = "リンクやフォーム内のボタンをクリックした場合の処理を記述します"  -->
                 <p><a href="#" onclick="confirmDestroy();">この従業員情報を削除する</a></p>
                 <form method="POST" action="<c:url value='/employees/destroy' />">
                     <input type="hidden" name="_token" value="${_token}" />

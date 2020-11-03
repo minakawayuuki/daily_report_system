@@ -155,6 +155,7 @@ table#report_list .report_action {
     width: 13%;
 }
 
+
 pre {
     font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
 }
@@ -162,3 +163,18 @@ pre {
 h3 {
     font-size: larger;
 }
+
+table#reactionnicetime_list th {
+    font-weight: bold;
+    padding: 10px 2%;
+}
+
+table#reactionnicetime_list .reactionnicetime_name {
+    width: 20%;
+    padding: 10px 2%;
+}
+
+table#reactionnicetime_list .reactionnicetime_created_at {
+    width: 20%;
+}
+

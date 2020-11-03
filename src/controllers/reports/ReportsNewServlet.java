@@ -34,6 +34,7 @@ public class ReportsNewServlet extends HttpServlet {
         request.setAttribute("_token", request.getSession().getId());
 
         Report r = new Report();
+                      // System.currentTimeMillis()は現在の時刻をミリ秒の単位で返却する
         r.setReport_date(new Date(System.currentTimeMillis()));
         request.setAttribute("report", r);
 

@@ -11,10 +11,19 @@
     </div>
 </c:if>
 <label for="report_date">日付</label><br />
+<!--
+ 下記のように書くとブラウザの機能の日付入力補助機能が表示されます。
+ ※ただし、ブラウザの補助機能に依存するので表示されないブラウザもあります。
+ -->
 <input type="date" name="report_date" value="<fmt:formatDate value='${report.report_date}' pattern='yyyy-MM-dd' />" />
 <br /><br />
 
 <label for="name">氏名</label><br />
+<!--
+${login_employee.name}としても同じ結果になるが
+「それがセッション（アプリケーション）スコープに置かれたデータである」ことを明示した方が
+お作法としてはGoodです。
+-->
 <c:out value="${sessionScope.login_employee.name}" />
 <br /><br />
 
