@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Employee;
 import models.Report;
 import utils.DBUtil;
 
@@ -37,9 +38,17 @@ public class ReportsShowServlet extends HttpServlet {
                     // find()メソッドは入力シーケンスの先頭から正規表現にマッチする部分がないか操作する
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 
+        Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
+
+        long followCheck = em.createNamedQuery("FollowedCheck", Long.class)
+                .setParameter("my_id", login_employee)
+                .setParameter("employee_id", r.getEmployee())
+                .getSingleResult();
+
         em.close();
 
         request.setAttribute("report", r);
+        request.setAttribute("followCheck", followCheck);
         request.setAttribute("token", request.getSession().getId());
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");

@@ -22,11 +22,24 @@
 <input type="password" name="password" />
 <br /><br />
 
-<label for="admin_flag">権限</label><br />
-<select name="admin_flag">
-    <option value="0"<c:if test="${employee.admin_flag == 0}">selected</c:if>>一般</option>
-    <option value="1"<c:if test="${employee.admin_flag == 1}">selected</c:if>>管理者</option>
-</select>
+<div class="job_title_placement">
+    <div class="job_title_placement1">
+        <label for="admin_flag">権限</label>
+        <select name="admin_flag">
+            <option value="0"<c:if test="${employee.admin_flag == 0}">selected</c:if>>一般</option>
+            <option value="1"<c:if test="${employee.admin_flag == 1}">selected</c:if>>管理者</option>
+        </select>
+    </div>
+
+    <div class="job_title_placement2">
+        <label for="position_flag">役職</label>
+        <select name="position_flag">
+            <option value="0"<c:if test="${employee.position_flag == 0}">selected</c:if>>一般</option>
+            <option value="1"<c:if test="${employee.position_flag == 1}">selected</c:if>>課長</option>
+            <option value="2"<c:if test="${employee.position_flag == 2}">selected</c:if>>部長</option>
+        </select>
+    </div>
+</div>
 <br /><br />
 
 <input type="hidden" name="_token" value="${_token}" />

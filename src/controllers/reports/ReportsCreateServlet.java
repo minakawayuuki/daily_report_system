@@ -58,8 +58,8 @@ public class ReportsCreateServlet extends HttpServlet {
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);
             r.setUpdated_at(currentTime);
-            // 追加した箇所です
             r.setReaction_nice_cnt(0);
+            r.setApproval(0);
 
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) {

@@ -7,7 +7,7 @@
             <div id="flush_success">
                 <c:choose>
                     <c:when test="${flush_name != null}">
-                        <c:out value="${flush_name}"></c:out><span class="mgr-10">さんを</span><c:out value="${flush}"></c:out>
+                        <c:out value="${flush_name}"></c:out><span class="mgr-10">さんを</span><c:out value="{flush}"></c:out>
                     </c:when>
                     <c:otherwise>
                         <c:out value="${flush}"></c:out>
@@ -15,7 +15,7 @@
                 </c:choose>
             </div>
         </c:if>
-        <h2>日報　一覧</h2>
+        <h2>未承認日報一覧</h2>
         <table id="report_list">
             <tbody>
                 <tr>
@@ -27,37 +27,37 @@
                     <th class="report_action2">操作</th>
                     <th class="report_approval">承認確認</th>
                 </tr>
-                <c:forEach var="report" items="${reports}" varStatus="status">
+                <c:forEach var="unapproved" items="${unapproveds}" varStatus="status">
                     <tr class="row${status.count % 2}">
                                                               <!-- Employeeクラスのnameが入る -->
-                        <td class="report_name"><c:out value="${report.employee.name}" /></td>
-                        <td class="report_date"><fmt:formatDate value='${report.report_date}' pattern='yyyy-MM-dd' /></td>
-                        <td class="report_title">${report.title}</td>
+                        <td class="report_name"><c:out value="${unapproved.employee.name}" /></td>
+                        <td class="report_date"><fmt:formatDate value='${unapproved.report_date}' pattern='yyyy-MM-dd' /></td>
+                        <td class="report_title">${unapproved.title}</td>
                         <c:choose>
                             <%-- いいね数が0より大きい時はいいね数をURLにする --%>
-                            <c:when test="${report.reaction_nice_cnt > 0}">
-                                <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${report.id}' />">${report.reaction_nice_cnt}</a></td>
+                            <c:when test="${unapproved.reaction_nice_cnt > 0}">
+                                <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${unapproved.id}' />">${unapproved.reaction_nice_cnt}</a></td>
                             </c:when>
                             <%-- いいね数が0より大きくない時はURLにしない --%>
                             <c:otherwise>
-                                <td class="report_reaction_nice_cnt">${report.reaction_nice_cnt}</td>
+                                <td class="report_reaction_nice_cnt">${unapproved.reaction_nice_cnt}</td>
                             </c:otherwise>
                         </c:choose>
-                        <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
+                        <td class="report_action"><a href="<c:url value='/reports/show?id=${unapproved.id}' />">詳細を見る</a></td>
                         <c:choose>
-                            <c:when test="${sessionScope.login_employee.id ==  report.employee.id}">
+                            <c:when test="${sessionScope.login_employee.id == unapproved.employee.id}">
                                 <td class="reprt_action">自分の日報</td>
                             </c:when>
                             <%-- status.indxで現在のループ回数を表示(最初は0からスタート) --%>
                             <c:when test="${followChecks[status.index] == 0}">
-                               <td class="report_action2"><a href="<c:url value='/reports/tofollow?id=${report.id}' />">フォローする</a></td>
+                               <td class="report_action2"><a href="<c:url value='/reports/tofollow?id=${unapproved.id}' />">フォローする</a></td>
                             </c:when>
                             <c:otherwise>
-                               <td class="report_action2"><a href="<c:url value='/reports/unfollow?id=${report.id}' />">フォロー解除</a></td>
+                               <td class="report_action2"><a href="<c:url value='/reports/unfollow?id=${unapproved.id}' />">フォロー解除</a></td>
                             </c:otherwise>
                         </c:choose>
                         <c:choose>
-                                <c:when test="${report.approval > 0}">
+                                <c:when test="${unapproved.approval > 0}">
                                     <td class="report_approval">承認済み</td>
                                 </c:when>
                                 <c:otherwise>
@@ -70,14 +70,14 @@
         </table>
 
         <div id="pagination">
-            （全 ${reports_count} 件）<br />
-            <c:forEach var="i" begin="1" end="${((reports_count - 1) / 15) + 1}" step="1">
+            (全 ${unapproveds_count} 件)<br />
+            <c:forEach var="i" begin="1" end="${((unapproveds_count - 1) / 15) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
                         <c:out value="${i}" />&nbsp;
                     </c:when>
                     <c:otherwise>
-                        <a href="<c:url value='/reports/index?page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                        <a href="<c:url value='/unapproved/index?page=${i}' />"><c:out value="${i}" /></a>&nbsp;
                     </c:otherwise>
                 </c:choose>
             </c:forEach>

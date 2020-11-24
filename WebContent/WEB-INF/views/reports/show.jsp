@@ -48,6 +48,17 @@
                                 </c:otherwise>
                             </c:choose>
                         </tr>
+                        <tr>
+                            <th>承認確認</th>
+                            <c:choose>
+                                <c:when test="${report.approval > 0}">
+                                    <td class="report_approval">承認済み</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td class="report_approval">未承認</td>
+                                </c:otherwise>
+                            </c:choose>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -56,7 +67,17 @@
                         <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
                     </c:when>
                     <c:otherwise>
-                       <p><a href="<c:url value="/reports/count/likes?id=${report.id}" />">いいねする</a></p>
+                       <p class="operation"><a href="<c:url value="/reports/count/likes?id=${report.id}" />">いいねする</a></p>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${sessionScope.login_employee.id ==  report.employee.id}">
+                    </c:when>
+                    <c:when test="${followCheck == 0}">
+                        <p class="operation"><a href="<c:url value='/reports/tofollow?id=${report.id}' />">フォローする</a></p>
+                    </c:when>
+                    <c:otherwise>
+                        <p class="operation"><a href="<c:url value='/reports/unfollow?id=${report.id}' />">フォロー解除</a></p>
                     </c:otherwise>
                 </c:choose>
             </c:when>
@@ -65,6 +86,9 @@
             </c:otherwise>
         </c:choose>
 
+        <c:if test="${sessionScope.login_employee.id != report.employee.id && sessionScope.login_employee.position_flag != 0 && sessionScope.login_employee.position_flag >= report.employee.position_flag && report.approval == 0}">
+            <p><a href="<c:url value="/reports/show/approve?id=${report.id}" />">承認する</a></p>
+        </c:if>
         <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
     </c:param>
 </c:import>

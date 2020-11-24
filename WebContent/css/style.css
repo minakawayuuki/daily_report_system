@@ -12,9 +12,10 @@ body {
 }
 
 #content {
-    width: 94%;
+    width: 96%;
     margin-top: 15px;
-    padding-left: 3%;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
 h1 {
@@ -27,6 +28,10 @@ h2 {
     margin-bottom: 15px;
 }
 
+.mgr-10 {
+    margin-right: 10px;
+}
+
 li {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -35,6 +40,11 @@ li {
 p {
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+p.operation{
+    display: inline-block;
+    width: 110px;
 }
 
 a {
@@ -140,19 +150,32 @@ table#report_list th {
 }
 
 table#report_list .report_name {
-    width: 20%;
+    width: 15%;
     padding: 10px 2%;
 }
+/* これ以上小さくしない */
 table#report_list .report_date {
-    width: 20%;
+    width: 11%;
 }
 
 table#report_list .report_title {
-    width: 37%;
+    width: 30%;
+}
+
+table#report_list .report_reaction_nice_cnt {
+    width: 10%;
 }
 
 table#report_list .report_action {
-    width: 13%;
+    width: 10%;
+}
+
+table#report_list .report_action2 {
+    width: 15%;
+}
+
+table#report_list .report_approval {
+    width: 9%;
 }
 
 
@@ -170,11 +193,22 @@ table#reactionnicetime_list th {
 }
 
 table#reactionnicetime_list .reactionnicetime_name {
-    width: 20%;
+    width: 50px;
     padding: 10px 2%;
 }
 
 table#reactionnicetime_list .reactionnicetime_created_at {
-    width: 20%;
+    width: 50px;
 }
 
+.job_title_placement {
+    display: flex;
+}
+
+.job_title_placement1 {
+    width: 100px;
+}
+
+.job_title_placement2 {
+    width: 90px;
+}

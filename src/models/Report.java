@@ -37,6 +37,16 @@ import javax.persistence.Table;
             // 指定された日報がすでにデータベースに存在しているかを調べる
             query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
             ),
+    @NamedQuery(
+            name = "getAllUnapproved",
+            // 未承認の日報を取得する
+            query = "SELECT r FROM Report AS r WHERE r.approval = 0 ORDER BY r.id DESC"
+            ),
+    @NamedQuery(
+            name = "getUnapprovedCount",
+            // 未承認の日報が何件あるか調べる
+            query = "SELECT COUNT(r) FROM Report AS r WHERE r.approval = 0"
+            ),
 })
 @Entity
 public class Report {
@@ -71,6 +81,10 @@ public class Report {
 
     @Column(name = "reaction_nice_cnt", nullable = false)
     private Integer reaction_nice_cnt;
+
+    // 0なら未承認1なら承認済みを表すカラム
+    @Column(name = "approval", nullable = false)
+    private Integer approval;
 
     public Integer getId() {
         return id;
@@ -134,6 +148,14 @@ public class Report {
 
     public void setReaction_nice_cnt(Integer reactio_nice_cnt) {
         this.reaction_nice_cnt = reactio_nice_cnt;
+    }
+
+    public Integer getApproval() {
+        return approval;
+    }
+
+    public void setApproval(Integer approval) {
+        this.approval = approval;
     }
 
 }

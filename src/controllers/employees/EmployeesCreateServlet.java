@@ -54,6 +54,7 @@ public class EmployeesCreateServlet extends HttpServlet {
                             )
                     );
             e.setAdmin_flag(Integer.parseInt(request.getParameter("admin_flag")));
+            e.setPosition_flag(Integer.parseInt(request.getParameter("position_flag")));
 
             // Timestampは日時情報を小数点以下の秒数値まで保持することができるクラス
             // System.currentTimeMillis()メソッドはミリ秒で表される現在の時間を返す

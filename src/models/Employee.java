@@ -40,7 +40,12 @@ import javax.persistence.Table;
             name = "checkLoginCodeAndPassword",
             // 従業員がログインするときに社員番号とパスワードが正しいかチェックする
             query = "SELECT e FROM Employee AS e WHERE e.delete_flag = 0 AND e.code = :code AND e.password = :pass"
-            )
+            ),
+    @NamedQuery(
+            name = "checkPositionFlag",
+            // 自分より役職が上の人の情報を調べる
+            query = "SELECT e From Employee AS e WHERE e.position_flag >= :position_flag"
+            ),
 })
 // クラスがEntityクラスであることを指定
 @Entity
@@ -82,6 +87,10 @@ public class Employee {
 
     @Column(name = "delete_flag", nullable = false)
     private Integer delete_flag;
+
+    // 役職(0,一般、1,課長、2,部長)
+    @Column(name = "position_flag", nullable = false)
+    private Integer position_flag;
 
     // Integer型のgetId()メソッド作成
     public Integer getId() {
@@ -150,4 +159,13 @@ public class Employee {
     public void setDelete_flag(Integer delete_flag) {
         this.delete_flag = delete_flag;
     }
+
+    public Integer getPosition_flag() {
+        return position_flag;
+    }
+
+    public void setPosition_flag(Integer position_flag) {
+        this.position_flag = position_flag;
+    }
+
 }

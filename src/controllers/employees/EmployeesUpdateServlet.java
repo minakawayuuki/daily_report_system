@@ -78,6 +78,7 @@ public class EmployeesUpdateServlet extends HttpServlet {
 
             e.setName(request.getParameter("name"));
             e.setAdmin_flag(Integer.parseInt(request.getParameter("admin_flag")));
+            e.setPosition_flag(Integer.parseInt(request.getParameter("position_flag")));
             e.setUpdated_at(new Timestamp(System.currentTimeMillis()));
             e.setDelete_flag(0);
 
