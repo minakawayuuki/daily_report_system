@@ -55,10 +55,30 @@ public class UnapprovedIndexServlet extends HttpServlet {
             long unapproveds_count = (long)em.createNamedQuery("getUnapprovedCount", Long.class)
                     .getSingleResult();
 
+            Long[] followChecks = new Long [(int)unapproveds_count];
+            // 配列指定に使う数字をint型の変数iで作成
+            int i = 0;
+            /*
+            for(データ型 変数名 : 配列名またはコレクション)
+            Report型のrを作成しList<Report>型の変数reportの数だけ拡張for文を実行する*/
+            for(Report r : unapproveds){
+                // 日報を登録した人物をフォローしているかのチェック
+                long followCheck = em.createNamedQuery("FollowedCheck", Long.class)
+                        .setParameter("my_id", login_employee)
+                        // 日報作成者のid
+                        .setParameter("employee_id", r.getEmployee())
+                        .getSingleResult();
+                // i番目のfollowCheckの結果をi配列目に入れる
+                followChecks[i] = followCheck;
+                // 配列の数字を１増やす
+                i++;
+            }
+
             em.close();
 
             request.setAttribute("unapproveds", unapproveds);
             request.setAttribute("unapproveds_count", unapproveds_count);
+            request.setAttribute("followChecks", followChecks);
             request.setAttribute("page", page);
 
             if(request.getSession().getAttribute("flush") != null) {
