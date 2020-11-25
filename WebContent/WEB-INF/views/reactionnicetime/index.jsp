@@ -26,24 +26,31 @@
                     </tbody>
                 </table>
 
-        <div id="pagination">
-            （全 ${reactionnicetime_count} 件）<br />
-            <c:forEach var="i" begin="1" end="${((reactionnicetime_count - 1) / 15) + 1}" step="1">
-                <c:choose>
-                    <c:when test="${i == page}">
-                        <c:out value="${i}" />&nbsp;
-                    </c:when>
-                    <c:otherwise>
-                        <a href="<c:url value='/reactionnicetime/index?id=${id}&page=${i}' />"><c:out value="${i}" /></a>&nbsp;
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </div>
-        </c:when>
-        <c:otherwise>
-           <h2>まだいいねした人はいません</h2>
-        </c:otherwise>
+                <div id="pagination">
+                    （全 ${reactionnicetime_count} 件）<br />
+                    <c:forEach var="i" begin="1" end="${((reactionnicetime_count - 1) / 15) + 1}" step="1">
+                        <c:choose>
+                            <c:when test="${i == page}">
+                                <c:out value="${i}" />&nbsp;
+                            </c:when>
+                            <c:otherwise>
+                                <a href="<c:url value='/reactionnicetime/index?id=${id}&page=${i}&gamenn=${gamenn}' />"><c:out value="${i}" /></a>&nbsp;
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+               </div>
+            </c:when>
+            <c:otherwise>
+               <h2>まだいいねした人はいません</h2>
+            </c:otherwise>
         </c:choose>
-        <p><a href="<c:url value='/reports/index' />">一覧に戻る</a></p>
+        <c:choose>
+            <c:when test="${gamenn == 2}">
+                <p><a href="<c:url value="/unapproved/index" />">未承認日報一覧に戻る</a></p>
+            </c:when>
+            <c:otherwise>
+                <p><a href="<c:url value="/reports/index" />">日報一覧に戻る</a></p>
+            </c:otherwise>
+        </c:choose>
     </c:param>
 </c:import>

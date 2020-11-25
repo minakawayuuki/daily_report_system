@@ -28,14 +28,14 @@
                         <c:choose>
                             <%-- いいね数が0より大きい時はいいね数をURLにする --%>
                             <c:when test="${report.reaction_nice_cnt > 0}">
-                                <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${report.id}' />">${report.reaction_nice_cnt}</a></td>
+                                <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${report.id}&gamenn=1' />">${report.reaction_nice_cnt}</a></td>
                             </c:when>
                             <%-- いいね数が0より大きくない時はURLにしない --%>
                             <c:otherwise>
                                 <td class="report_reaction_nice_cnt">${report.reaction_nice_cnt}</td>
                             </c:otherwise>
                         </c:choose>
-                        <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
+                        <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}&gamenn=1' />">詳細を見る</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

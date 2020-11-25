@@ -7,7 +7,7 @@
             <div id="flush_success">
                 <c:choose>
                     <c:when test="${flush_name != null}">
-                        <c:out value="${flush_name}"></c:out><span class="mgr-10">さんを</span><c:out value="{flush}"></c:out>
+                        <c:out value="${flush_name}"></c:out><span class="mgr-10">さんを</span><c:out value="${flush}"></c:out>
                     </c:when>
                     <c:otherwise>
                         <c:out value="${flush}"></c:out>
@@ -36,24 +36,24 @@
                         <c:choose>
                             <%-- いいね数が0より大きい時はいいね数をURLにする --%>
                             <c:when test="${unapproved.reaction_nice_cnt > 0}">
-                                <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${unapproved.id}' />">${unapproved.reaction_nice_cnt}</a></td>
+                                <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${unapproved.id}&gamenn=2' />">${unapproved.reaction_nice_cnt}</a></td>
                             </c:when>
                             <%-- いいね数が0より大きくない時はURLにしない --%>
                             <c:otherwise>
                                 <td class="report_reaction_nice_cnt">${unapproved.reaction_nice_cnt}</td>
                             </c:otherwise>
                         </c:choose>
-                        <td class="report_action"><a href="<c:url value='/reports/show?id=${unapproved.id}' />">詳細を見る</a></td>
+                        <td class="report_action"><a href="<c:url value='/reports/show?id=${unapproved.id}&gamenn=2' />">詳細を見る</a></td>
                         <c:choose>
                             <c:when test="${sessionScope.login_employee.id == unapproved.employee.id}">
                                 <td class="reprt_action">自分の日報</td>
                             </c:when>
                             <%-- status.indxで現在のループ回数を表示(最初は0からスタート) --%>
                             <c:when test="${followChecks[status.index] == 0}">
-                               <td class="report_action2"><a href="<c:url value='/reports/tofollow?id=${unapproved.id}' />">フォローする</a></td>
+                               <td class="report_action2"><a href="<c:url value='/reports/tofollow?id=${unapproved.id}&gamenn=2' />">フォローする</a></td>
                             </c:when>
                             <c:otherwise>
-                               <td class="report_action2"><a href="<c:url value='/reports/unfollow?id=${unapproved.id}' />">フォロー解除</a></td>
+                               <td class="report_action2"><a href="<c:url value='/reports/unfollow?id=${unapproved.id}&gamenn=2' />">フォロー解除</a></td>
                             </c:otherwise>
                         </c:choose>
                         <c:choose>

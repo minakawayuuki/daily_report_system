@@ -35,6 +35,8 @@ public class ReportsShowServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        Integer gamenn = Integer.parseInt(request.getParameter("gamenn"));
+
                     // find()メソッドは入力シーケンスの先頭から正規表現にマッチする部分がないか操作する
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 
@@ -47,6 +49,7 @@ public class ReportsShowServlet extends HttpServlet {
 
         em.close();
 
+        request.setAttribute("gamenn", gamenn);
         request.setAttribute("report", r);
         request.setAttribute("followCheck", followCheck);
         request.setAttribute("token", request.getSession().getId());

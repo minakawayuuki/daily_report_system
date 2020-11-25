@@ -40,7 +40,7 @@
                             <c:choose>
                                 <%-- いいね数が0より大きい時はいいね数をURLにする --%>
                                 <c:when test="${report.reaction_nice_cnt > 0}">
-                                    <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${report.id}' />">${report.reaction_nice_cnt}</a></td>
+                                    <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${report.id}&gamenn=${gamenn}' />">${report.reaction_nice_cnt}</a></td>
                                 </c:when>
                                 <%-- いいね数が0より大きくない時はURLにしない --%>
                                 <c:otherwise>
@@ -64,20 +64,20 @@
 
                 <c:choose>
                     <c:when test="${sessionScope.login_employee.id == report.employee.id}">
-                        <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
+                        <p><a href="<c:url value="/reports/edit?id=${report.id}&gamenn=${gamenn}" />">この日報を編集する</a></p>
                     </c:when>
                     <c:otherwise>
-                       <p class="operation"><a href="<c:url value="/reports/count/likes?id=${report.id}" />">いいねする</a></p>
+                       <p class="operation"><a href="<c:url value="/reports/count/likes?id=${report.id}&gamenn=${gamenn}" />">いいねする</a></p>
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
                     <c:when test="${sessionScope.login_employee.id ==  report.employee.id}">
                     </c:when>
                     <c:when test="${followCheck == 0}">
-                        <p class="operation"><a href="<c:url value='/reports/tofollow?id=${report.id}' />">フォローする</a></p>
+                        <p class="operation"><a href="<c:url value='/reports/tofollow?id=${report.id}&gamenn=${gamenn}' />">フォローする</a></p>
                     </c:when>
                     <c:otherwise>
-                        <p class="operation"><a href="<c:url value='/reports/unfollow?id=${report.id}' />">フォロー解除</a></p>
+                        <p class="operation"><a href="<c:url value='/reports/unfollow?id=${report.id}&gamenn=${gamenn}' />">フォロー解除</a></p>
                     </c:otherwise>
                 </c:choose>
             </c:when>
@@ -87,8 +87,15 @@
         </c:choose>
 
         <c:if test="${sessionScope.login_employee.id != report.employee.id && sessionScope.login_employee.position_flag != 0 && sessionScope.login_employee.position_flag >= report.employee.position_flag && report.approval == 0}">
-            <p><a href="<c:url value="/reports/show/approve?id=${report.id}" />">承認する</a></p>
+            <p><a href="<c:url value="/reports/show/approve?id=${report.id}&gamenn=${gamenn}" />">承認する</a></p>
         </c:if>
-        <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
+        <c:choose>
+            <c:when test="${gamenn == 2}">
+                <p><a href="<c:url value="/unapproved/index" />">未承認日報一覧に戻る</a></p>
+            </c:when>
+            <c:otherwise>
+                <p><a href="<c:url value="/reports/index" />">日報一覧に戻る</a></p>
+            </c:otherwise>
+        </c:choose>
     </c:param>
 </c:import>

@@ -39,6 +39,7 @@ public class ReportsCountLikesServlet extends HttpServlet {
         EntityManager型の変数emに入れる*/
         EntityManager em = DBUtil.createEntityManager();
 
+        Integer gamenn = Integer.parseInt(request.getParameter("gamenn"));
         /*
         フォームから入手した"id"をInteger型にキャストしてem(データベース)の
         Reportクラスから探したのをReport型の変数rに入れ作成 */
@@ -96,7 +97,11 @@ public class ReportsCountLikesServlet extends HttpServlet {
         }
         // セッションスコープのidを削除
         request.getSession().removeAttribute("id");
-        // reports/indexにリダイレクト
-        response.sendRedirect(request.getContextPath() + "/reports/index");
+
+        if(gamenn == 2){
+            response.sendRedirect(request.getContextPath() + "/unapproved/index");
+        } else{
+            response.sendRedirect(request.getContextPath() + "/reports/index");
+        }
     }
 }

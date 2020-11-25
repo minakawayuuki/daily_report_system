@@ -39,6 +39,8 @@ public class ReactionNiceTimeIndexServlet extends HttpServlet {
         EntityManager型の変数emに入れる*/
         EntityManager em = DBUtil.createEntityManager();
 
+        Integer gamenn = Integer.parseInt(request.getParameter("gamenn"));
+
         // フォームからString型の"id"を入手しInteger型にキャストしたのをInteger型の変数idに入れる
         Integer id = Integer.parseInt(request.getParameter("id"));
 
@@ -78,6 +80,7 @@ public class ReactionNiceTimeIndexServlet extends HttpServlet {
         // em(データベース)を閉じる
         em.close();
 
+        request.setAttribute("gamenn", gamenn);
         request.setAttribute("id", id);
         request.setAttribute("reactionnicetimes", reactionnicetimes);
         request.setAttribute("reactionnicetime_count", reactionnicetime_count);

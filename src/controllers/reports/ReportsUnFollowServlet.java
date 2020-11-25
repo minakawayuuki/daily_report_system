@@ -36,6 +36,8 @@ public class ReportsUnFollowServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        Integer gamenn = Integer.parseInt(request.getParameter("gamenn"));
+
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 
         if(r == null){
@@ -69,7 +71,11 @@ public class ReportsUnFollowServlet extends HttpServlet {
                 request.getSession().setAttribute("flush", "フォロー解除しました");
             }
         }
-        response.sendRedirect(request.getContextPath() + "/reports/index");
+        if(gamenn == 2){
+            response.sendRedirect(request.getContextPath() + "/unapproved/index");
+        } else{
+            response.sendRedirect(request.getContextPath() + "/reports/index");
+        }
     }
 
 }

@@ -36,24 +36,24 @@
                         <c:choose>
                             <%-- いいね数が0より大きい時はいいね数をURLにする --%>
                             <c:when test="${report.reaction_nice_cnt > 0}">
-                                <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${report.id}' />">${report.reaction_nice_cnt}</a></td>
+                                <td class="report_reaction_nice_cnt"><a href="<c:url value='/reactionnicetime/index?id=${report.id}&gamenn=1' />">${report.reaction_nice_cnt}</a></td>
                             </c:when>
                             <%-- いいね数が0より大きくない時はURLにしない --%>
                             <c:otherwise>
                                 <td class="report_reaction_nice_cnt">${report.reaction_nice_cnt}</td>
                             </c:otherwise>
                         </c:choose>
-                        <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
+                        <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}&gamenn=1' />">詳細を見る</a></td>
                         <c:choose>
                             <c:when test="${sessionScope.login_employee.id ==  report.employee.id}">
                                 <td class="reprt_action">自分の日報</td>
                             </c:when>
                             <%-- status.indxで現在のループ回数を表示(最初は0からスタート) --%>
                             <c:when test="${followChecks[status.index] == 0}">
-                               <td class="report_action2"><a href="<c:url value='/reports/tofollow?id=${report.id}' />">フォローする</a></td>
+                               <td class="report_action2"><a href="<c:url value='/reports/tofollow?id=${report.id}&gamenn=1' />">フォローする</a></td>
                             </c:when>
                             <c:otherwise>
-                               <td class="report_action2"><a href="<c:url value='/reports/unfollow?id=${report.id}' />">フォロー解除</a></td>
+                               <td class="report_action2"><a href="<c:url value='/reports/unfollow?id=${report.id}&gamenn=1' />">フォロー解除</a></td>
                             </c:otherwise>
                         </c:choose>
                         <c:choose>
