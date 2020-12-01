@@ -36,9 +36,9 @@ public class MyFollowerIndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        Employee login_employees = (Employee)request.getSession().getAttribute("login_employee");
+        Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
 
-        Employee e_my_id = em.find(Employee.class, login_employees.getId());
+        Employee e_my_id = em.find(Employee.class, login_employee.getId());
 
         int page;
         try{
@@ -59,19 +59,24 @@ public class MyFollowerIndexServlet extends HttpServlet {
                 .setParameter("employee_id", e_my_id)
                 .getSingleResult();
 
-        Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
-
+        // follwers_countでカウントした数のLong[]形の配列followChecksを作成
         Long[] followChecks = new Long[(int)followers_count];
 
+        // int形の変数iに0を入れ作成
         int i = 0;
+        // followersリストをFollow形の変数fとして使えるようにする
+        // followersリストの数だけ繰り返す
         for(Follow f : followers){
-            // 取得した日報をフォローしているかのチェック
+            // 取得した日報をフォローしているかのチェック(フォローしていたら１をカウントする)
             long followCheck = em.createNamedQuery("FollowedCheck", Long.class)
                     .setParameter("my_id", login_employee)
                     .setParameter("employee_id", f.getMy_id())
                     .getSingleResult();
 
+            // followChecks[i]は配列を表します(繰り返し１回目なら0)
+            // followCheckの結果をi配列目に入れる
             followChecks[i] = followCheck;
+            // 次のループの際に配列の数[i]に１をたす(繰り返し２回目なら１)
             i++;
         }
 
